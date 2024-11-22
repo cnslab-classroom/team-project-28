@@ -55,28 +55,28 @@ public class Snake {
     }
 }
 
-    // 이동 메서드
-    public boolean move() {
-        int[] head = body.getFirst(); // 현재 머리 위치
-        int[] newHead = new int[]{head[0] + direction[0], head[1] + direction[1]};
+    // // 이동 메서드
+    // public boolean move() {
+    //     int[] head = body.getFirst(); // 현재 머리 위치
+    //     int[] newHead = new int[]{head[0] + direction[0], head[1] + direction[1]};
 
-        // 게임판 밖으로 나갔는지 확인
-        if (newHead[0] < 0 || newHead[1] < 0 || 
-            newHead[0] >= boardSize || newHead[1] >= boardSize) {
-            return false; // 게임 종료
-        }
+    //     // 게임판 밖으로 나갔는지 확인
+    //     if (newHead[0] < 0 || newHead[1] < 0 || 
+    //         newHead[0] >= boardSize || newHead[1] >= boardSize) {
+    //         return false; // 게임 종료
+    //     }
 
-        // 자신의 몸과 충돌 확인
-        for (int[] part : body) {
-            if (newHead[0] == part[0] && newHead[1] == part[1]) {
-                return false; // 게임 종료
-            }
-        }
+    //     // 자신의 몸과 충돌 확인
+    //     for (int[] part : body) {
+    //         if (newHead[0] == part[0] && newHead[1] == part[1]) {
+    //             return false; // 게임 종료
+    //         }
+    //     }
 
-        body.addFirst(newHead); // 새로운 머리 추가
-        body.removeLast(); // 꼬리 제거
-        return true; // 정상적으로 이동
-    }
+    //     body.addFirst(newHead); // 새로운 머리 추가
+    //     body.removeLast(); // 꼬리 제거
+    //     return true; // 정상적으로 이동
+    // }
 
     // // 먹이를 먹었을 때 길이 증가
     // public void grow() {
