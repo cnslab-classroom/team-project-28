@@ -1,10 +1,8 @@
 // 출력 화면(터미널)의 크기를 키운 후 실행해주세요.
 
-import java.util.Scanner;
 import java.io.File;
-import java.lang.Thread;
+import java.util.Scanner;
 import java.util.Vector;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -13,11 +11,13 @@ public class Game {
     int boardSize;
     int boardSize_y;
     char[][] board;
+    private Score score;
 
     Game(int boardSize) {
         this.boardSize = boardSize;
         this.boardSize_y = boardSize * 2;
         this.board = new char[boardSize][boardSize * 2];
+        this.score = new Score();
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
                 board[i][j] = '□';
@@ -36,6 +36,8 @@ public class Game {
             }
             System.out.println();
         }
+        System.out.println("Score: " + score.getScore());
+
     }
 
     // snake의 위치를 받아서 board에 표시
@@ -65,6 +67,8 @@ public class Game {
             snake.getNewTail();
             food.spawnNewItem(v2);
             board[food.x][food.y] = food.image;
+
+            score.increaseScore(10);
 
         }
         if (obstacle.x == snake.getBody().get(0).x && obstacle.y == snake.getBody().get(0).y) {
