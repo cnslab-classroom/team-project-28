@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.lang.Thread;
 import java.util.Vector;
 
 public class Game {
