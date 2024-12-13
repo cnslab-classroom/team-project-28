@@ -96,9 +96,6 @@ public class Snake extends JFrame implements KeyListener {
     }
 
     boolean isCollision(Point p) {
-        if (body.size() != 1 && p.x == body.get(1).x && p.y == body.get(1).y) {
-            return false;
-        }
         for (int i = 0; i < body.size() - 1; i++) {
             if (body.get(i).equals(p)) {
                 return true;
