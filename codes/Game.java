@@ -83,7 +83,7 @@ public class Game {
 
     public static void main(String[] args) throws Exception {
 
-        File audioFile = new File("C:\\Users\\ttkak\\OneDrive\\Desktop\\kwu\\2-2\\Object Programing\\homework\\team_project\\team-project-28\\jogang.wav");
+        File audioFile = new File("team-project-28\\jogang.wav");
         AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
         Clip clip = AudioSystem.getClip();
         clip.open(audioStream);
