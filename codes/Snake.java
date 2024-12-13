@@ -48,8 +48,11 @@ public class Snake extends JFrame implements KeyListener {
     }
 
     void setSpeed(int speed) {
+        if (speed < 100) {
+            return;
+        }
         this.speed = speed;
-    }   
+    }
 
     public char getDirection() {
         return direction;
@@ -59,10 +62,8 @@ public class Snake extends JFrame implements KeyListener {
         return body;
     }
 
-  
     public boolean oneStep() {
         Point head = new Point(body.get(0).x, body.get(0).y);
-        
 
         if (direction == 'w') {
             head.x--;
@@ -85,18 +86,18 @@ public class Snake extends JFrame implements KeyListener {
     }
 
     private boolean isValidPoint(Point p) {
-        if (p.x < 0 || p.x >= boardSize || p.y < 0 || p.y >= boardSize*2 || isCollision(p)) {
+        if (p.x < 0 || p.x >= boardSize || p.y < 0 || p.y >= boardSize * 2 || isCollision(p)) {
             return false;
         }
         return true;
     }
 
-    boolean isCollision(Point p){
-        if(body.size() != 1 &&p.x == body.get(1).x && p.y == body.get(1).y){
+    boolean isCollision(Point p) {
+        if (body.size() != 1 && p.x == body.get(1).x && p.y == body.get(1).y) {
             return false;
         }
-        for(int i=0; i<body.size()-1; i++){
-            if(body.get(i).equals(p)){
+        for (int i = 0; i < body.size() - 1; i++) {
+            if (body.get(i).equals(p)) {
                 return true;
             }
         }
@@ -106,33 +107,33 @@ public class Snake extends JFrame implements KeyListener {
     public void getNewTail() {
         Point tail = new Point(body.get(body.size() - 1).x, body.get(body.size() - 1).y);
 
-        //tail오른쪽
+        // tail오른쪽
         tail.y++;
-        if(isValidPoint(tail)){
+        if (isValidPoint(tail)) {
             body.add(tail);
-        }else {
-            //tail아래
+        } else {
+            // tail아래
             tail.y--;
             tail.x++;
-            if(isValidPoint(tail)){
+            if (isValidPoint(tail)) {
                 body.add(tail);
-            }else {
-                //tail왼쪽
+            } else {
+                // tail왼쪽
                 tail.x--;
                 tail.y--;
-                if(isValidPoint(tail)){
+                if (isValidPoint(tail)) {
                     body.add(tail);
-                }else {
-                    //tail위
+                } else {
+                    // tail위
                     tail.y++;
                     tail.x--;
-                    if(isValidPoint(tail)){
+                    if (isValidPoint(tail)) {
                         body.add(tail);
                     }
                 }
             }
         }
-       
+
     }
 
 }
