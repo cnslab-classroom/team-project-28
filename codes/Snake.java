@@ -38,7 +38,43 @@ public class Snake extends JFrame implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        // keyPressed는 사용하지 않지만 필요함
+        // 키 입력을 처리하는 메서드
+        int keyCode = e.getKeyCode(); // 방향키 및 키보드 입력 코드 가져오기
+
+        // 방향키 및 WASD 키 입력 처리
+        switch (keyCode) {
+            case KeyEvent.VK_W: // W 키
+            case KeyEvent.VK_UP: // ↑ 방향키
+                if (direction != 's') { // 현재 방향이 아래(s)가 아닐 때만 위로 변경
+                    direction = 'w';
+                }
+                break;
+
+            case KeyEvent.VK_A: // A 키
+            case KeyEvent.VK_LEFT: // ← 방향키
+                if (direction != 'd') { // 현재 방향이 오른쪽(d)가 아닐 때만 왼쪽으로 변경
+                    direction = 'a';
+                }
+                break;
+
+            case KeyEvent.VK_S: // S 키
+            case KeyEvent.VK_DOWN: // ↓ 방향키
+                if (direction != 'w') { // 현재 방향이 위(w)가 아닐 때만 아래로 변경
+                    direction = 's';
+                }
+                break;
+
+            case KeyEvent.VK_D: // D 키
+            case KeyEvent.VK_RIGHT: // → 방향키
+                if (direction != 'a') { // 현재 방향이 왼쪽(a)가 아닐 때만 오른쪽으로 변경
+                    direction = 'd';
+                }
+                break;
+
+            default:
+                // 다른 키는 무시
+                break;
+        }
     }
 
     @Override
