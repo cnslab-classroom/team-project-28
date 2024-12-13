@@ -3,17 +3,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Vector;
 
-class Point {
-    public int x;
-    public int y;
-
-    public Point(int x, int y) {
-        this.x = x;
-        this.y = y;
-        
-    }
-}
-
 public class Snake extends JFrame implements KeyListener {
     private Vector<Point> body;
     private char direction; // 방향을 나타내는 변수
@@ -56,5 +45,44 @@ public class Snake extends JFrame implements KeyListener {
         return direction;
     }
 
-   
+    public Vector<Point> getBody() {
+        return body;
+    }
+
+    class oneStepThread extends Thread {
+        public void run() {
+           oneStep();
+        }
+    }
+    public boolean oneStep() {
+        Point head = new Point(body.get(0).x, body.get(0).y);
+        
+
+        if (direction == 'w') {
+            head.x--;
+        } else if (direction == 'a') {
+            head.y--;
+        } else if (direction == 's') {
+            head.x++;
+        } else if (direction == 'd') {
+            head.y++;
+        }
+        if (isValidPoint(head)) {
+            // 꼬리 제거
+            body.remove(body.size() - 1);
+            // 새로운 머리 추가
+            body.add(0, head);
+            return true;
+        } else
+            return false;
+
+    }
+
+    private boolean isValidPoint(Point p) {
+        if (p.x < 0 || p.x >= boardSize || p.y < 0 || p.y >= boardSize || body.contains(p)) {
+            return false;
+        }
+        return true;
+    }
+
 }
