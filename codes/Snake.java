@@ -75,10 +75,22 @@ public class Snake extends JFrame implements KeyListener {
     }
 
     private boolean isValidPoint(Point p) {
-        if (p.x < 0 || p.x >= boardSize || p.y < 0 || p.y >= boardSize*2 || body.contains(p)) {
+        if (p.x < 0 || p.x >= boardSize || p.y < 0 || p.y >= boardSize*2 || isCollision(p)) {
             return false;
         }
         return true;
+    }
+
+    boolean isCollision(Point p){
+        if(body.size() != 1 &&p.x == body.get(1).x && p.y == body.get(1).y){
+            return false;
+        }
+        for(int i=0; i<body.size()-1; i++){
+            if(body.get(i).x == p.x && body.get(i).y == p.y){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void getNewTail() {

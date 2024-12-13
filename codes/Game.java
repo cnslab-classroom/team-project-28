@@ -77,7 +77,7 @@ public class Game {
             game.update_state(snake, food);
             game.print_state();
            
-            Thread.sleep(1000);
+            Thread.sleep(700);
             
         }
     }
