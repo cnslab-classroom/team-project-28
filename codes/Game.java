@@ -19,6 +19,7 @@ public class Game {
         }
     }
 
+    //현재상태를 출력
     void print_state() {
         
         System.out.print("\033[H\033[2J");
@@ -31,7 +32,7 @@ public class Game {
     }
 
     // snake의 위치를 받아서 board에 표시
-    void update_state(Snake snake) {
+    void update_state(Snake snake, Food food) {
         Vector<Point> v = snake.getBody();
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize_y; j++) {
@@ -43,19 +44,37 @@ public class Game {
             Point p = v.get(i);
             board[p.x][p.y] = '■';
         }
-        
+        if(food.x == snake.getBody().get(0).x && food.y == snake.getBody().get(0).y){
+            snake.getNewTail();
+            food.spawnNewItem(v);
+            board[food.x][food.y] = food.image;
+        }else{
+            board[food.x][food.y] = food.image;
+        }
     }
 
     public static void main(String[] args) throws Exception {
         // 사용자에게 board크기값을 받아 board를 생성
         Scanner sc = new Scanner(System.in);
         int boardSize = 0;
+        System.out.print("Input board size>>");
         boardSize = sc.nextInt();
         Game game = new Game(boardSize);
         Snake snake = new Snake(0, 0, boardSize);
+
+        //food의 위치 초기화
+        Food food = new Food(boardSize, snake.getBody());
+        food.spawnNewItem(snake.getBody());
+
         while (true) {
-            snake.oneStep();
-            game.update_state(snake);
+            if(!snake.oneStep()){
+                System.out.println("Game Over");
+                return ;
+            };
+            
+            
+
+            game.update_state(snake, food);
             game.print_state();
            
             Thread.sleep(1000);

@@ -81,4 +81,36 @@ public class Snake extends JFrame implements KeyListener {
         return true;
     }
 
+    public void getNewTail() {
+        Point tail = new Point(body.get(body.size() - 1).x, body.get(body.size() - 1).y);
+
+        //tail오른쪽
+        tail.y++;
+        if(isValidPoint(tail)){
+            body.add(tail);
+        }else {
+            //tail아래
+            tail.y--;
+            tail.x++;
+            if(isValidPoint(tail)){
+                body.add(tail);
+            }else {
+                //tail왼쪽
+                tail.x--;
+                tail.y--;
+                if(isValidPoint(tail)){
+                    body.add(tail);
+                }else {
+                    //tail위
+                    tail.y++;
+                    tail.x--;
+                    if(isValidPoint(tail)){
+                        body.add(tail);
+                    }
+                }
+            }
+        }
+       
+    }
+
 }
