@@ -83,7 +83,11 @@ public class Game {
 
     public static void main(String[] args) throws Exception {
 
-        File audioFile = new File("team-project-28\\jogang.wav");
+        String currentDir = System.getProperty("user.dir");
+
+        // 출력
+        System.out.println("현재 작업 디렉토리: " + currentDir);
+        File audioFile = new File(currentDir +"\\"+ "jogang.wav");
         AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
         Clip clip = AudioSystem.getClip();
         clip.open(audioStream);
