@@ -56,17 +56,5 @@ public class Snake extends JFrame implements KeyListener {
         return direction;
     }
 
-    public static void main(String[] args) {
-        Snake snake = new Snake(0, 0, 10);
-
-        // 예시로 현재 방향을 출력하는 루프
-        while (true) {
-            System.out.println("Current direction: " + snake.getDirection());
-            try {
-                Thread.sleep(1000); // 1초 대기
-            } catch (InterruptedException e) {
-                break; // 인터럽트 시 루프 종료
-            }
-        }
-    }
+   
 }
