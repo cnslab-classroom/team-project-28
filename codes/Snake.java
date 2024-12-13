@@ -45,30 +45,22 @@ public class Snake extends JFrame implements KeyListener {
         switch (keyCode) {
             case KeyEvent.VK_W: // W 키
             case KeyEvent.VK_UP: // ↑ 방향키
-                if (direction != 's') { // 현재 방향이 아래(s)가 아닐 때만 위로 변경
-                    direction = 'w';
-                }
+                direction = 'w';
                 break;
 
             case KeyEvent.VK_A: // A 키
             case KeyEvent.VK_LEFT: // ← 방향키
-                if (direction != 'd') { // 현재 방향이 오른쪽(d)가 아닐 때만 왼쪽으로 변경
-                    direction = 'a';
-                }
+                direction = 'a';
                 break;
 
             case KeyEvent.VK_S: // S 키
             case KeyEvent.VK_DOWN: // ↓ 방향키
-                if (direction != 'w') { // 현재 방향이 위(w)가 아닐 때만 아래로 변경
-                    direction = 's';
-                }
+                direction = 's';
                 break;
 
             case KeyEvent.VK_D: // D 키
             case KeyEvent.VK_RIGHT: // → 방향키
-                if (direction != 'a') { // 현재 방향이 왼쪽(a)가 아닐 때만 오른쪽으로 변경
-                    direction = 'd';
-                }
+                direction = 'd';
                 break;
 
             default:
