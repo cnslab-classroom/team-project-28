@@ -4,13 +4,15 @@ import java.util.Vector;
 
 public class Game {
     int boardSize;
+    int boardSize_y;
     char[][] board;
 
     Game(int boardSize) {
         this.boardSize = boardSize;
+        this.boardSize_y = boardSize*2;
         this.board = new char[boardSize][boardSize*2];
         for (int i = 0; i < boardSize; i++) {
-            for (int j = 0; j < boardSize*2; j++) {
+            for (int j = 0; j < boardSize; j++) {
                 board[i][j] = '□';
             }
             System.out.println();
@@ -18,10 +20,10 @@ public class Game {
     }
 
     void print_state() {
-        System.out.print("Everything on the console will cleared");
+        
         System.out.print("\033[H\033[2J");
         for (int i = 0; i < boardSize; i++) {
-            for (int j = 0; j < boardSize*2; j++) {
+            for (int j = 0; j < boardSize_y; j++) {
                 System.out.print(board[i][j]);
             }
             System.out.println();
@@ -32,7 +34,7 @@ public class Game {
     void update_state(Snake snake) {
         Vector<Point> v = snake.getBody();
         for (int i = 0; i < boardSize; i++) {
-            for (int j = 0; j < boardSize; j++) {
+            for (int j = 0; j < boardSize_y; j++) {
                 board[i][j] = '□';
             }
             System.out.println();
@@ -41,6 +43,7 @@ public class Game {
             Point p = v.get(i);
             board[p.x][p.y] = '■';
         }
+        
     }
 
     public static void main(String[] args) throws Exception {
@@ -51,9 +54,10 @@ public class Game {
         Game game = new Game(boardSize);
         Snake snake = new Snake(0, 0, boardSize);
         while (true) {
+            snake.oneStep();
             game.update_state(snake);
             game.print_state();
-            snake.oneStep();
+           
             Thread.sleep(1000);
             
         }
