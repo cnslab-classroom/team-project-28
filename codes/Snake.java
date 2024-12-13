@@ -79,7 +79,7 @@ public class Snake extends JFrame implements KeyListener {
     }
 
     private boolean isValidPoint(Point p) {
-        if (p.x < 0 || p.x >= boardSize || p.y < 0 || p.y >= boardSize || body.contains(p)) {
+        if (p.x < 0 || p.x >= boardSize*2 || p.y < 0 || p.y >= boardSize*2 || body.contains(p)) {
             return false;
         }
         return true;

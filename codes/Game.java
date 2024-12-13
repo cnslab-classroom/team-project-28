@@ -8,9 +8,9 @@ public class Game {
 
     Game(int boardSize) {
         this.boardSize = boardSize;
-        this.board = new char[boardSize][boardSize];
+        this.board = new char[boardSize][boardSize*2];
         for (int i = 0; i < boardSize; i++) {
-            for (int j = 0; j < boardSize; j++) {
+            for (int j = 0; j < boardSize*2; j++) {
                 board[i][j] = '□';
             }
             System.out.println();
@@ -21,7 +21,7 @@ public class Game {
         System.out.print("Everything on the console will cleared");
         System.out.print("\033[H\033[2J");
         for (int i = 0; i < boardSize; i++) {
-            for (int j = 0; j < boardSize; j++) {
+            for (int j = 0; j < boardSize*2; j++) {
                 System.out.print(board[i][j]);
             }
             System.out.println();
@@ -53,10 +53,9 @@ public class Game {
         while (true) {
             game.update_state(snake);
             game.print_state();
-            Snake.oneStepThread t = snake.new oneStepThread();
-            t.start();
+            snake.oneStep();
             Thread.sleep(1000);
-            t.join();
+            
         }
     }
 }
