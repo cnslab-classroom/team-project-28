@@ -1,3 +1,5 @@
+// 출력 화면(터미널)의 크기를 키운 후 실행해주세요.
+
 import java.util.Scanner;
 import java.io.File;
 import java.lang.Thread;
