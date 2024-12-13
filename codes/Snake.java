@@ -2,6 +2,9 @@ import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Vector;
+import javax.sound.sampled.*;
+import java.io.File;
+import java.io.IOException;
 
 public class Snake extends JFrame implements KeyListener {
     private Vector<Point> body;
@@ -14,7 +17,7 @@ public class Snake extends JFrame implements KeyListener {
         this.body.add(new Point(startX, startY)); // 초기 뱀의 머리 위치
         this.direction = 'd'; // 기본 방향: 오른쪽
         this.boardSize = boardSize;
-        this.speed = 700;
+        this.speed = 300;
 
         // JFrame 설정
         setTitle("Snake Game");
