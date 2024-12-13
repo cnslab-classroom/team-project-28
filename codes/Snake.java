@@ -49,7 +49,6 @@ public class Snake extends JFrame implements KeyListener {
         return body; // 뱀의 몸을 구성하는 점들의 리스트 반환
     }
 
-    // 뱀이 한 칸 이동하는 메서드
     public boolean oneStep(Item item) {
         Point head = new Point(body.get(0).x, body.get(0).y); // 현재 머리 위치 복사
 
@@ -73,22 +72,19 @@ public class Snake extends JFrame implements KeyListener {
         }
     }
 
-    // 뱀의 길이를 증가시키는 메서드
     public void grow() {
         Point tail = body.get(body.size() - 1); // 꼬리 위치 가져오기
         body.add(new Point(tail.x, tail.y)); // 꼬리 위치에 새 점 추가
     }
 
-    // 새로운 머리 위치가 유효한지 확인하는 메서드
     private boolean isValidPoint(Point p) {
         // 보드 경계 및 자기 자신과의 충돌 체크
-        if (p.x < 0 || p.x >= boardSize || p.y < 0 || p.y >= boardSize * 2 || body.contains(p)) {
-            return false;
+        if (p.x >= 0 && p.x < boardSize && p.y >= 0 && p.y < boardSize * 2 && !body.contains(p)) {
+            return true;
         }
-        return true;
+        return false;
     }
 
-    // 뱀이 현재 방향으로 이동할 수 있는지 확인하는 메서드
     public boolean canMove() {
         Point head = new Point(body.get(0).x, body.get(0).y); // 현재 머리 위치 복사
 
