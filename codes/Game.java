@@ -19,6 +19,7 @@ public class Game {
         }
     }
 
+    //현재상태를 출력
     void print_state() {
         
         System.out.print("\033[H\033[2J");
@@ -31,7 +32,7 @@ public class Game {
     }
 
     // snake의 위치를 받아서 board에 표시
-    void update_state(Snake snake) {
+    void update_state(Snake snake, Food food, Obstacle obstacle, SpeedItem speedItem) {
         Vector<Point> v = snake.getBody();
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize_y; j++) {
@@ -43,36 +44,60 @@ public class Game {
             Point p = v.get(i);
             board[p.x][p.y] = '■';
         }
-        
+
+
+        if(food.x == snake.getBody().get(0).x && food.y == snake.getBody().get(0).y){
+            snake.getNewTail();
+            food.spawnNewItem(v);
+            board[food.x][food.y] = food.image;
+
+        }else if(obstacle.x == snake.getBody().get(0).x && obstacle.y == snake.getBody().get(0).y){
+            System.out.println("Game Over");
+            System.exit(0);
+        }else if(speedItem.x == snake.getBody().get(0).x && speedItem.y == snake.getBody().get(0).y){
+            snake.setSpeed(snake.getSpeed()-100);
+            speedItem.spawnNewItem(v);
+        }
+        else{
+            board[food.x][food.y] = food.image;
+            board[obstacle.x][obstacle.y] = obstacle.image;
+            board[speedItem.x][speedItem.y] = speedItem.image;
+        }
+
     }
+
     public static void main(String[] args) throws Exception {
-        // 사용자에게 보드 크기값을 받아 보드 생성
+        // 사용자에게 board크기값을 받아 board를 생성
         Scanner sc = new Scanner(System.in);
-        System.out.print("보드 크기를 입력하세요: ");
-        int boardSize = sc.nextInt();
-        
+        int boardSize = 0;
+        System.out.print("Input board size>>");
+        boardSize = sc.nextInt();
         Game game = new Game(boardSize);
         Snake snake = new Snake(0, 0, boardSize);
-        
+
+        //food의 위치 초기화
+        Food food = new Food(boardSize, snake.getBody());
+        food.spawnNewItem(snake.getBody());
+
+        Obstacle obstacle = new Obstacle(boardSize, snake.getBody());
+        obstacle.spawnNewItem(snake.getBody());
+
+        SpeedItem speedItem = new SpeedItem(boardSize, snake.getBody());
+        speedItem.spawnNewItem(snake.getBody());
+
         while (true) {
-            // 뱀 이동
-            boolean canMove = snake.oneStep();
+            if(!snake.oneStep()){
+                System.out.println("Game Over");
+                return ;
+            };
             
-            // 충돌로 인해 이동 불가 시 게임 종료
-            if (!canMove) {
-                System.out.println("게임 종료! 뱀이 충돌했습니다.");
-                break;
-            }
             
-            // 상태 업데이트 및 출력
-            game.update_state(snake);
+
+            game.update_state(snake, food, obstacle, speedItem);
             game.print_state();
+           
+            Thread.sleep(snake.getSpeed());
             
-            // 게임 속도 조절
-            Thread.sleep(1000);
         }
-        
-        sc.close(); // 스캐너 닫기
     }
-    
 }

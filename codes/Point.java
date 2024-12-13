@@ -6,4 +6,12 @@ public class Point {
         this.x = x;
         this.y = y;
     }
+
+    public boolean equals(Object obj) {
+        if (obj instanceof Point) {
+            Point p = (Point) obj;
+            return x == p.x && y == p.y;
+        }
+        return false;
+    }
 }
