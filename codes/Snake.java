@@ -86,7 +86,7 @@ public class Snake extends JFrame implements KeyListener {
             return false;
         }
         for(int i=0; i<body.size()-1; i++){
-            if(body.get(i).x == p.x && body.get(i).y == p.y){
+            if(body.get(i).equals(p)){
                 return true;
             }
         }
@@ -125,4 +125,5 @@ public class Snake extends JFrame implements KeyListener {
        
     }
 
+    
 }

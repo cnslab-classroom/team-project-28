@@ -17,7 +17,16 @@ abstract public class Item {
         do {
             x = rand.nextInt(boardSize);
             y = rand.nextInt(boardSize * 2);
-        } while (snakeBody.contains(new Point(x, y)));
+        } while (contain(snakeBody,new Point(x, y)));
+    }
+
+    public boolean contain(Vector<Point> snakeBody, Point p) {
+        for(int i =0; i<snakeBody.size(); i++){
+            if(snakeBody.get(i).equals(p)){
+                return true;
+            }
+        }
+        return false;
     }
 
    
