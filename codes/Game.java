@@ -9,8 +9,8 @@ public class Game {
 
     Game(int boardSize) {
         this.boardSize = boardSize;
-        this.boardSize_y = boardSize*2;
-        this.board = new char[boardSize][boardSize*2];
+        this.boardSize_y = boardSize * 2;
+        this.board = new char[boardSize][boardSize * 2];
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
                 board[i][j] = '□';
@@ -19,9 +19,9 @@ public class Game {
         }
     }
 
-    //현재상태를 출력
+    // 현재상태를 출력
     void print_state() {
-        
+
         System.out.print("\033[H\033[2J");
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize_y; j++) {
@@ -34,6 +34,15 @@ public class Game {
     // snake의 위치를 받아서 board에 표시
     void update_state(Snake snake, Food food, Obstacle obstacle, SpeedItem speedItem) {
         Vector<Point> v = snake.getBody();
+        Vector<Point> v2 = new Vector<Point>();
+
+        for (int i = 0; i < v.size(); i++) {
+            v2.add(v.get(i));
+        }
+        v2.add(new Point(food.x, food.y));
+        v2.add(new Point(obstacle.x, obstacle.y));
+        v2.add(new Point(speedItem.x, speedItem.y));
+
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize_y; j++) {
                 board[i][j] = '□';
@@ -45,24 +54,25 @@ public class Game {
             board[p.x][p.y] = '■';
         }
 
-
-        if(food.x == snake.getBody().get(0).x && food.y == snake.getBody().get(0).y){
+        if (food.x == snake.getBody().get(0).x && food.y == snake.getBody().get(0).y) {
             snake.getNewTail();
-            food.spawnNewItem(v);
+            food.spawnNewItem(v2);
             board[food.x][food.y] = food.image;
 
-        }else if(obstacle.x == snake.getBody().get(0).x && obstacle.y == snake.getBody().get(0).y){
+        }
+        if (obstacle.x == snake.getBody().get(0).x && obstacle.y == snake.getBody().get(0).y) {
             System.out.println("Game Over");
             System.exit(0);
-        }else if(speedItem.x == snake.getBody().get(0).x && speedItem.y == snake.getBody().get(0).y){
-            snake.setSpeed(snake.getSpeed()-100);
-            speedItem.spawnNewItem(v);
         }
-        else{
-            board[food.x][food.y] = food.image;
-            board[obstacle.x][obstacle.y] = obstacle.image;
-            board[speedItem.x][speedItem.y] = speedItem.image;
+        if (speedItem.x == snake.getBody().get(0).x && speedItem.y == snake.getBody().get(0).y) {
+            snake.setSpeed(snake.getSpeed() - 100);
+            speedItem.spawnNewItem(v2);
+            board[food.x][food.y] = speedItem.image;
         }
+
+        board[food.x][food.y] = food.image;
+        board[obstacle.x][obstacle.y] = obstacle.image;
+        board[speedItem.x][speedItem.y] = speedItem.image;
 
     }
 
@@ -75,7 +85,7 @@ public class Game {
         Game game = new Game(boardSize);
         Snake snake = new Snake(0, 0, boardSize);
 
-        //food의 위치 초기화
+        // food의 위치 초기화
         Food food = new Food(boardSize, snake.getBody());
         food.spawnNewItem(snake.getBody());
 
@@ -86,18 +96,17 @@ public class Game {
         speedItem.spawnNewItem(snake.getBody());
 
         while (true) {
-            if(!snake.oneStep()){
+            if (!snake.oneStep()) {
                 System.out.println("Game Over");
-                return ;
-            };
-            
-            
+                return;
+            }
+            ;
 
             game.update_state(snake, food, obstacle, speedItem);
             game.print_state();
-           
+
             Thread.sleep(snake.getSpeed());
-            
+
         }
     }
 }
