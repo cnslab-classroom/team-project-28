@@ -49,11 +49,7 @@ public class Snake extends JFrame implements KeyListener {
         return body;
     }
 
-    class oneStepThread extends Thread {
-        public void run() {
-           oneStep();
-        }
-    }
+  
     public boolean oneStep() {
         Point head = new Point(body.get(0).x, body.get(0).y);
         
@@ -79,7 +75,7 @@ public class Snake extends JFrame implements KeyListener {
     }
 
     private boolean isValidPoint(Point p) {
-        if (p.x < 0 || p.x >= boardSize*2 || p.y < 0 || p.y >= boardSize*2 || body.contains(p)) {
+        if (p.x < 0 || p.x >= boardSize || p.y < 0 || p.y >= boardSize*2 || body.contains(p)) {
             return false;
         }
         return true;
