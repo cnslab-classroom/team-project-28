@@ -1,31 +1,38 @@
 import java.util.Scanner;
-import java.lang.Thread;
 import java.util.Vector;
 
 public class Game {
-    int boardSize;
-    int boardSize_y;
-    char[][] board;
+    int boardSize;       // 보드의 세로 크기
+    int boardSize_y;     // 보드의 가로 크기
+    char[][] board;      // 보드를 표현하는 2D 배열
+    Item item;           // 아이템 객체
 
     Game(int boardSize) {
         this.boardSize = boardSize;
-        this.boardSize_y = boardSize*2;
-        this.board = new char[boardSize][boardSize*2];
+        this.boardSize_y = boardSize * 2;
+        this.board = new char[boardSize][boardSize * 2];
+        this.item = new Item(boardSize); // 아이템 초기화
+
+        // 보드 초기화
         for (int i = 0; i < boardSize; i++) {
-            for (int j = 0; j < boardSize; j++) {
+            for (int j = 0; j < boardSize * 2; j++) {
                 board[i][j] = '□';
             }
-            System.out.println();
         }
     }
 
     //현재상태를 출력
     void print_state() {
-        
-        System.out.print("\033[H\033[2J");
+        System.out.print("\033[H\033[2J"); // 터미널 화면을 지움
+        System.out.flush();
+
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize_y; j++) {
-                System.out.print(board[i][j]);
+                if (i == item.getX() && j == item.getY()) {
+                    System.out.print('i'); // 아이템 표시
+                } else {
+                    System.out.print(board[i][j]);
+                }
             }
             System.out.println();
         }
@@ -34,12 +41,15 @@ public class Game {
     // snake의 위치를 받아서 board에 표시
     void update_state(Snake snake, Food food) {
         Vector<Point> v = snake.getBody();
+        
+        // 보드 초기화
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize_y; j++) {
                 board[i][j] = '□';
             }
-            System.out.println();
         }
+
+        // 뱀의 몸체 표시
         for (int i = 0; i < v.size(); i++) {
             Point p = v.get(i);
             board[p.x][p.y] = '■';
@@ -53,8 +63,8 @@ public class Game {
         }
     }
 
+    // 메인 메서드
     public static void main(String[] args) throws Exception {
-        // 사용자에게 board크기값을 받아 board를 생성
         Scanner sc = new Scanner(System.in);
         int boardSize = 0;
         System.out.print("Input board size>>");
@@ -76,9 +86,10 @@ public class Game {
 
             game.update_state(snake, food);
             game.print_state();
-           
-            Thread.sleep(1000);
-            
+
+            Thread.sleep(1000); // 게임 속도 조절
         }
+
+        sc.close(); // 스캐너 종료
     }
 }

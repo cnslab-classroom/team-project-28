@@ -4,7 +4,7 @@ import java.awt.event.KeyListener;
 import java.util.Vector;
 
 public class Snake extends JFrame implements KeyListener {
-    private Vector<Point> body;
+    private Vector<Point> body; // 뱀의 몸을 구성하는 점들의 리스트
     private char direction; // 방향을 나타내는 변수
     private int boardSize; // 게임판 크기 (NxN)
 
@@ -42,43 +42,47 @@ public class Snake extends JFrame implements KeyListener {
     }
 
     public char getDirection() {
-        return direction;
+        return direction; // 현재 방향 반환
     }
 
     public Vector<Point> getBody() {
-        return body;
+        return body; // 뱀의 몸을 구성하는 점들의 리스트 반환
     }
 
-  
-    public boolean oneStep() {
-        Point head = new Point(body.get(0).x, body.get(0).y);
-        
+    public boolean oneStep(Item item) {
+        Point head = new Point(body.get(0).x, body.get(0).y); // 현재 머리 위치 복사
 
-        if (direction == 'w') {
-            head.x--;
-        } else if (direction == 'a') {
-            head.y--;
-        } else if (direction == 's') {
-            head.x++;
-        } else if (direction == 'd') {
-            head.y++;
-        }
-        if (isValidPoint(head)) {
-            // 꼬리 제거
+        // 방향에 따라 머리 위치 업데이트
+        if (direction == 'w') head.x--;
+        else if (direction == 'a') head.y--;
+        else if (direction == 's') head.x++;
+        else if (direction == 'd') head.y++;
+
+        if (isValidPoint(head)) { // 새로운 머리 위치가 유효한지 확인
+            if (head.x == item.getX() && head.y == item.getY()) {
+                return true; // 아이템을 먹음
+            }
+
+            // 꼬리 제거 후 머리 추가
             body.remove(body.size() - 1);
-            // 새로운 머리 추가
             body.add(0, head);
-            return true;
-        } else
             return false;
+        } else {
+            return false; // 충돌 발생
+        }
+    }
 
+    public void grow() {
+        Point tail = body.get(body.size() - 1); // 꼬리 위치 가져오기
+        body.add(new Point(tail.x, tail.y)); // 꼬리 위치에 새 점 추가
     }
 
     private boolean isValidPoint(Point p) {
-        if (p.x < 0 || p.x >= boardSize || p.y < 0 || p.y >= boardSize*2 || body.contains(p)) {
-            return false;
+        // 보드 경계 및 자기 자신과의 충돌 체크
+        if (p.x >= 0 && p.x < boardSize && p.y >= 0 && p.y < boardSize * 2 && !body.contains(p)) {
+            return true;
         }
-        return true;
+        return false;
     }
 
     public void getNewTail() {
