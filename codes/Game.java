@@ -22,6 +22,7 @@ public class Game {
     void print_state() {
         
         System.out.print("\033[H\033[2J");
+        System.out.flush();
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize_y; j++) {
                 System.out.print(board[i][j]);
