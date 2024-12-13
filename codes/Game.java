@@ -45,7 +45,6 @@ public class Game {
         }
         
     }
-
     public static void main(String[] args) throws Exception {
         // 사용자에게 보드 크기값을 받아 보드 생성
         Scanner sc = new Scanner(System.in);
@@ -75,4 +74,5 @@ public class Game {
         
         sc.close(); // 스캐너 닫기
     }
+    
 }
