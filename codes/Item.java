@@ -20,7 +20,7 @@ abstract public class Item {
         } while (contain(snakeBody,new Point(x, y)));
     }
 
-    public boolean contain(Vector<Point> snakeBody, Point p) {
+    private boolean contain(Vector<Point> snakeBody, Point p) {
         for(int i =0; i<snakeBody.size(); i++){
             if(snakeBody.get(i).equals(p)){
                 return true;
