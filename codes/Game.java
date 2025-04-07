@@ -6,7 +6,7 @@ import java.util.Vector;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-
+//sample
 public class Game {
     int boardSize;
     int boardSize_y;
